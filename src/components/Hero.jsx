@@ -38,15 +38,6 @@ const Hero = () => {
     },
   };
 
-  const portraitVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
-
   return (
     <section className="relative min-h-screen bg-[#FAF7F5] text-stone-800 flex items-center justify-center px-6 py-16 overflow-hidden">
 
