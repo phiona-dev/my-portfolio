@@ -1,139 +1,171 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion"
+import { RotateCw } from "lucide-react"
+import { JOURNEY_DATA, PROCESS_DATA, SKILLS_DATA } from "../data/aboutData"
+import { JourneyCard } from "./JourneyCard"
+import { ProcessStep } from "./ProcessStep"
+import { SkillBadge } from "./SkillBadge"
 
-export default function About() {
-  const skillsData = {
-    Frontend: {
-      badge: 'bg-rose-100 text-rose-700 border-rose-200',
-      skills: ['React', 'JavaScript (ES6+)', 'Tailwind CSS', 'Framer Motion', 'HTML5/CSS3'],
-    },
-    Backend: {
-      badge: 'bg-amber-100 text-amber-800 border-amber-200',
-      skills: ['Node.js', 'Express', 'Socket.io', 'RESTful APIs'],
-    },
-    Databases: {
-      badge: 'bg-teal-100 text-teal-800 border-teal-200',
-      skills: ['PostgreSQL', 'MongoDB', 'Git / GitHub', 'Vite'],
-    },
-  };
-
-  // Stagger Animation Variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 25 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
-
+const About = () => {
   return (
-    <section id="about" className="py-24 px-6 relative bg-[#FAF7F5] overflow-hidden">
-      <div className="max-w-6xl mx-auto">
-        
-        {/* Section Header */}
+    <section id="about" className="relative overflow-hidden bg-[#FAF7F5] px-6 py-24">
+      <div className="pointer-events-none absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-rose-100/50 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-amber-100/50 blur-3xl" />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/80 border border-amber-200 text-xs font-semibold text-amber-800 mb-3">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
-            Background & Expertise
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-100/80 px-3.5 py-1.5 text-xs font-semibold text-amber-800">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-amber-400"/>
+            Background & Mindset
           </div>
-          <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-stone-900">
+          <h2 className="text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
             About Me
           </h2>
         </motion.div>
 
-        {/* Content Layout Grid */}
+        {/* Hero section */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-4xl"
         >
+          <h3 className="text-4xl font-medium leading-[1.1] tracking-tight text-stone-900 sm:text-5xl md:text-6xl">
+            Building ideas into{' '}
+            <span className="relative inline-block font-semibold text-rose-500">
+              products,
+              <svg
+                className="pointer-events-none absolute -bottom-2 left-0 h-3 w-full text-rose-300/80"
+                viewBox="0 0 100 12"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M 2 8 Q 50 1, 98 8"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+            <br />
+            one project at a time.
+          </h3>
+
+          <div className="mt-10 max-w-2xl space-y-5 text-lg leading-relaxed text-stone-600 sm:text-xl">
+            <p>
+              Hi, I'm <span className="font-semibold text-stone-900">Phiona</span>, a Software Engineering student and developer based in Nairobi.
+            </p>
+            <p>
+              I started with frontend development, got curious about what happens behind the screen and somehow ended up exploring APIs, databases, authentication, real-time systems and the process of turning ideas into products.
+            </p>
+          </div>
           
-          {/* Bio Card */}
-          <motion.div
-            variants={itemVariants}
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.3 }}
-            className="lg:col-span-5 bg-white/80 border border-stone-200/80 rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group"
-          >
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-300 via-amber-300 to-teal-300" />
-            
-            <h3 className="text-2xl font-semibold text-stone-900 mb-4 leading-snug">
-              Driven by clean code & thoughtful user experiences.
-            </h3>
-            
-            <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-4">
-              I am a Software Engineering student at USIU-Africa with a deep passion for building robust web architectures, real-time engines, and visually captivating digital interfaces.
-            </p>
-            
-            <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-6">
-              Whether engineering data-efficient backend systems or designing fluid frontend components, I focus on building scalable solutions that balance performance with elegance.
-            </p>
-
-            <div className="pt-6 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-medium">
-              <span>📍 Based in Nairobi, Kenya</span>
-              <span className="text-rose-500 font-semibold">Available for Roles</span>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <div className="flex items-center gap-2 rounded-full border border-stone-300/60 bg-stone-200/60 px-4 py-2 text-xs font-medium text-stone-700 sm:text-sm">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500"/>
+              Nairobi, Kenya
             </div>
-          </motion.div>
-
-          {/* Technical Skills Cards */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-7 flex flex-col gap-6"
-          >
-            <motion.div
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white/80 border border-stone-200/80 rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <h3 className="text-xl font-semibold text-stone-900 mb-6 flex items-center gap-2">
-                <span>Technical Stack</span>
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {Object.entries(skillsData).map(([category, { badge, skills }]) => (
-                  <div key={category} className="space-y-3">
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${badge}`}>
-                      {category}
-                    </span>
-                    <ul className="space-y-2 pt-1">
-                      {skills.map((skill) => (
-                        <motion.li
-                          key={skill}
-                          whileHover={{ x: 4 }}
-                          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                          className="text-stone-700 text-sm font-medium flex items-center gap-2 cursor-default"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-stone-300 group-hover:bg-rose-400 transition-colors" />
-                          {skill}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-
+            <div className="rounded-full border border-rose-200 bg-rose-100/60 px-4 py-2 text-xs font-medium text-rose-800 sm:text-sm">
+              Open to engineering opportunities
+            </div>
+          </div>
         </motion.div>
 
+        {/*My journey section */}
+        <div className="mt-28">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-500">
+              My Journey
+            </p>
+            <h3 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+              Curiosity took me beyond the interface.
+            </h3>
+            <p className="mt-4 max-w-xl leading-relaxed text-stone-500">
+              What started with designing interfaces gradually grew into an interest in understanding the systems behind the products I build.
+            </p>
+          </motion.div>
+
+          <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {JOURNEY_DATA.map((item, index) => (
+              <JourneyCard key={item.number} item={item} index={index} />
+            ))}
+          </div>
+        </div>
+
+        {/*process section */}
+        <div className="mt-32">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto max-w-xl text-center"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-500">
+              How I Build
+            </p>
+            <h3 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+              From an idea to something real
+            </h3>
+            <p className="mt-4 leading-relaxed text-stone-500">
+              I enjoy the journey just as much as the final result.
+            </p>
+          </motion.div>
+
+          <div className="relative mt-16">
+            <div className="absolute left-[12%] right-[12%] top-10 hidden h-px bg-stone-200 md:block"/>
+            <div className="relative grid grid-cols-2 gap-10 md:grid-cols-4">
+              {PROCESS_DATA.map((step, index) => (
+                <ProcessStep key={step.title} step={step} index={index} />
+              ))}
+            </div>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="mt-16 flex items-center justify-center gap-2 text-xl italic text-stone-500"
+          >
+            And then I start again. 
+            <RotateCw className="h-5 w-5 animate-spin-slow text-rose-500"/>
+          </motion.p>
+        </div>
+
+        {/*tech ecosystem section */}
+        <div>
+          <motion.div>
+            <p>
+              My Stack
+            </p>
+            <h3>
+              My Tech Ecosystem
+            </h3>
+            <p>
+              Technologies and tools I've used while experimenting, learning, and building.
+            </p>
+          </motion.div>
+
+          <div>
+              {SKILLS_DATA.map((skill, idx) => (
+                <SkillBadge key={skill.name} skill={skill} idx={idx} />
+              ))}
+          </div>
+        </div>
       </div>
     </section>
-  );
+  )
 }
+
+export default About
