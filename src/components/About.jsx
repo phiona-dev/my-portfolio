@@ -144,20 +144,24 @@ const About = () => {
         </div>
 
         {/*tech ecosystem section */}
-        <div>
-          <motion.div>
-            <p>
+        <div className="mt-32">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} className="mb-10"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-500">
               My Stack
             </p>
-            <h3>
+            <h3 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900">
               My Tech Ecosystem
             </h3>
-            <p>
+            <p className="mt-3 max-w-lg text-sm leading-relaxed text-stone-500">
               Technologies and tools I've used while experimenting, learning, and building.
             </p>
           </motion.div>
 
-          <div>
+          <div className="flex flex-wrap items-center justify-center gap-4 py-6 sm:gap-5">
               {SKILLS_DATA.map((skill, idx) => (
                 <SkillBadge key={skill.name} skill={skill} idx={idx} />
               ))}
