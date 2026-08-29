@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { RotateCw } from "lucide-react"
+import { RotateCw, Lightbulb } from "lucide-react"
 import { JOURNEY_DATA, PROCESS_DATA, SKILLS_DATA } from "../data/aboutData"
 import { JourneyCard } from "./JourneyCard"
 import { ProcessStep } from "./ProcessStep"
@@ -167,6 +167,34 @@ const About = () => {
               ))}
           </div>
         </div>
+
+        {/* closing banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mt-32 overflow-hidden rounded-4xl border border-stone-800 bg-stone-900 px-8 py-14 text-center sm:px-16"
+        >
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
+            Current Status
+          </p>
+          <h3 className="mt-16 text-3xl font-medium leading-tight text-white sm:text-5xl">
+            Still learning. <br />Still building.<br />
+            <span className="text-rose-300">Still curious.</span>
+          </h3>
+          <p className="mx-auto mt-7 max-w-xl leading-relaxed text-stone-400">
+            Every project teaches me something new. The goal is simple: build something, learn from it, and make the next one better.
+          </p>
+
+          <motion.div
+            animate={{ rotate: [0, 8, -8, 0], y: [0, -4, 0] }}
+            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3, ease: 'easeInOut' }}
+            className="mt-9 inline-block text-3xl"
+          >
+              <Lightbulb className="h-5 w-5 text-yellow-500" />
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )
