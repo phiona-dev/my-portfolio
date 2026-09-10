@@ -1,196 +1,243 @@
+
 import { useState } from 'react';
-import { motion, AnimatePresence } from "framer-motion"
-import { filter } from 'framer-motion/client';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight } from "lucide-react"
+import { PROJECTS_DATA } from '../data/projectsData';
+import { ProjectCard } from "./ProjectCard"
 
 export default function Projects() {
-  const [activeCategory, setActiveCategory] = useState("All")
+  const [activeCategory, setActiveCategory] = useState('All');
 
-  const categories = ["All", "Full-Stack", "Real-Time"];
-
-
-  const projectsData = [
+  const categories = [
     {
-      id: 'mrembo-hakiki',
-      title: 'Mrembo Hakiki',
-      subtitle: 'Anti-Counterfeit Web Platform',
-      description:
-        'A data-efficient anti-counterfeit web platform engineered to verify beauty product authenticity and protect consumers.',
-      tech: ['Express', 'PostgreSQL', 'React', 'Tailwind CSS'],
-      badgeColor: 'bg-rose-100 text-rose-700 border-rose-200',
-      accentGlow: 'from-rose-200/40 via-amber-100/30 to-transparent',
-      liveUrl: '#',
-      githubUrl: '#',
+      name: 'All',
+      count: PROJECTS_DATA.length,
     },
     {
-      id: 'campus-connect',
-      title: 'Campus Connect',
-      subtitle: 'Real-Time Campus Networking App',
-      description:
-        'A high-performance real-time networking platform enabling seamless instant messaging, event hubs, and campus collaboration.',
-      tech: ['React', 'Node.js', 'Socket.io', 'MongoDB'],
-      badgeColor: 'bg-teal-100 text-teal-800 border-teal-200',
-      accentGlow: 'from-teal-200/40 via-purple-100/30 to-transparent',
-      liveUrl: '#',
-      githubUrl: '#',
+      name: 'Full-Stack',
+      count: PROJECTS_DATA.filter(
+        (project) => project.category === 'Full-Stack'
+      ).length,
+    },
+    {
+      name: 'Real-Time',
+      count: PROJECTS_DATA.filter(
+        (project) => project.category === 'Real-Time'
+      ).length,
     },
   ];
 
-  const filteredProjects = activeCategory === "All" ? projectsData : projectsData.filter((p) => p.category === activeCategory)
+  const filteredProjects =
+    activeCategory === 'All'
+      ? PROJECTS_DATA
+      : PROJECTS_DATA.filter(
+          (project) => project.category === activeCategory
+        );
 
   const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15 }}
-  }
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: {},
     visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      transition: {
+        staggerChildren: 0.12,
+      },
     },
-  }
+  };
+
 
   return (
-    <section id="projects" className="py-24 px-6 relative bg-[#FAF7F5]">
-      <div className="max-w-6xl mx-auto">
-        
-        {/* Section Header */}
+    <section
+      id="projects"
+      className="relative overflow-hidden bg-[#FAF7F5] px-6 py-24"
+    >
+      {/*  AMBIENT BACKGROUND blur*/}
+
+      <div className="pointer-events-none absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-rose-100/40 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-amber-100/40 blur-3xl" />
+
+
+      <div className="relative z-10 mx-auto max-w-6xl">
+
+        {/* SECTION HEADER */}
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            margin: '-100px',
+          }}
+          transition={{
+            duration: 0.6,
+          }}
+          className="mb-12 flex flex-col gap-8 md:flex-row md:items-end md:justify-between"
         >
+
+          {/* Heading */}
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-100/80 border border-rose-200 text-xs font-semibold text-rose-600 mb-3">
-              <span className="w-2 h-2 rounded-full bg-rose-400" />
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-100/80 px-3.5 py-1.5 text-xs font-semibold text-rose-600">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-rose-400" />
               Selected Works
             </div>
-            <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-stone-900 mb-4">
+            <h2 className="mb-4 text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
               Featured Projects
             </h2>
-            <p className="text-stone-600 text-base sm:text-lg max-w-xl">
-              A curated showcase of full-stack web architectures, real-time engines, and soft visual interfaces I've crafted.
+            <p className="max-w-xl text-base leading-relaxed text-stone-600 sm:text-lg">
+              A few of the projects where I've turned ideas into
+              working products — from full-stack applications to
+              real-time experiences.
             </p>
           </div>
 
+
+          {/*FILTERS*/}
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
-                key={category}
+                key={category.name}
                 type="button"
-                onClick={() => setActiveCategory(category)}
-                className={`relative px-4 py-2 rounded-full text-xs font-medium transition-colors duration-300 ${
-                  activeCategory === category
+                onClick={() =>
+                  setActiveCategory(category.name)
+                }
+                className={`relative rounded-full px-4 py-2.5 text-xs font-medium transition-colors duration-300 ${
+                  activeCategory === category.name
                     ? 'text-stone-900'
                     : 'text-stone-500 hover:text-stone-800'
                 }`}
               >
-              {activeCategory === category && (
-                <motion.span
-                  layoutId="activeFilter"
-                  className="absolute inset-0 bg-stone-200/80 rounded-full -z-10"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
-              )}
-                {category}
+                {/* Animated active background */}
+                {activeCategory === category.name && (
+                  <motion.span
+                    layoutId="activeProjectFilter"
+                    className="absolute inset-0 -z-10 rounded-full bg-stone-200/80"
+                    transition={{
+                      type: 'spring',
+                      stiffness: 380,
+                      damping: 30,
+                    }}
+                  />
+                )}
+                <span className="relative z-10">
+                  {category.name}
+                </span>
+                <span
+                  className={`relative z-10 ml-1.5 ${
+                    activeCategory === category.name
+                      ? 'text-stone-500'
+                      : 'text-stone-400'
+                  }`}
+                >
+                  {category.count}
+                </span>
               </button>
             ))}
           </div>
         </motion.div>
-        
 
-        {/* Project Cards Grid */}
-        <motion.div 
+        {/* PROJECT GRID */}
+        <motion.div
           layout
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10"
+          viewport={{
+            once: true,
+            margin: '-50px',
+          }}
+          className="grid grid-cols-1 gap-8 md:grid-cols-2"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
-            <motion.article
-              layout
-              key={project.id}
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-              exit={{ opacity: 0, scale: 0.95 }}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.3 }}
-              className="relative group bg-white/80 border border-stone-200/80 rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-xl hover:border-stone-300 transition-all duration-500 flex flex-col justify-between overflow-hidden"
-            >
-              {/* Subtle Background Accent Gradient on Hover */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${project.accentGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
-              />
-
-              <div className="relative z-10">
-                {/* Title & Subtitle */}
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div>
-                    <h3 className="text-2xl sm:text-3xl font-semibold text-stone-900 group-hover:text-rose-600 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm font-medium text-stone-500 mt-1">
-                      {project.subtitle}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p className="text-stone-600 text-sm sm:text-base leading-relaxed my-6">
-                  {project.description}
-                </p>
-
-                {/* Tech Stack Pills */}
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 rounded-full bg-stone-100 border border-stone-200/80 text-xs font-medium text-stone-700"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Action Links */}
-              <div className="relative z-10 flex items-center gap-4 pt-6 border-t border-stone-100">
-                <motion.a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="px-5 py-2.5 rounded-full bg-stone-900 text-stone-100 text-xs font-semibold hover:bg-rose-500 transition-colors shadow-sm"
-                >
-                  Live Demo ↗
-                </motion.a>
-                <motion.a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="px-5 py-2.5 rounded-full bg-stone-100 border border-stone-200 text-stone-700 text-xs font-semibold hover:bg-stone-200 transition-colors"
-                >
-                  Source Code
-                </motion.a>
-              </div>
-            </motion.article>
+              <ProjectCard key={project.id} project={project}/>
             ))}
+
           </AnimatePresence>
-    
-          
+
+        </motion.div>
+
+
+        {/* EMPTY STATE */}
+
+        {filteredProjects.length === 0 && (
+
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            className="rounded-3xl border border-stone-200 bg-white/60 px-6 py-16 text-center"
+          >
+
+            <p className="text-lg font-medium text-stone-700">
+              More projects coming soon.
+            </p>
+
+            <p className="mt-2 text-sm text-stone-500">
+              I'm always experimenting with something new.
+            </p>
+
+          </motion.div>
+
+        )}
+
+
+        {/* BOTTOM CTA */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+          }}
+          transition={{
+            duration: 0.6,
+          }}
+          className="mt-16 flex flex-col items-start justify-between gap-5 border-t border-stone-200 pt-8 sm:flex-row sm:items-center"
+        >
+
+          <div>
+
+            <p className="text-sm font-medium text-stone-800">
+              Interested in how I build?
+            </p>
+
+            <p className="mt-1 text-sm text-stone-500">
+              Explore source repositories and architectural experiments
+            </p>
+
+          </div>
+
+
+          <motion.a
+            href="https://github.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{
+              x: 4,
+            }}
+            className="text-sm font-semibold text-stone-900 transition-colors hover:text-rose-500"
+          >
+            View GitHub
+            <ArrowRight className="h-4 w-4" />
+          </motion.a>
+
         </motion.div>
 
       </div>
+
     </section>
   );
 }
